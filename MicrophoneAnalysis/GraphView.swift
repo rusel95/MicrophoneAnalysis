@@ -26,11 +26,13 @@ class GraphView: UIView {
         let xPosition = centerOfView.x
         let yPosition = self.bounds.height - ( self.bounds.height * CGFloat( frequency / (maxHZ - minHZ) ) )
         pointsArray.append( CGPoint(x: xPosition, y: yPosition) )
-        
-        setPolygonPath()
+
+        self.setNeedsDisplay()
     }
     
-    func setPolygonPath() {
+    override func draw(_ rect: CGRect) {
+        centerOfView = CGPoint(x: self.bounds.width / 2, y: self.bounds.height / 2)
+        
         let polygonPath = UIBezierPath()
         if pointsArray.count > 0 {
             polygonPath.move(to: pointsArray.first!)
@@ -44,14 +46,6 @@ class GraphView: UIView {
         orangeColor.setStroke()
         polygonPath.lineWidth = 3.0
         polygonPath.stroke()
-        
-        self.setNeedsDisplay()
-    }
-
-    override func draw(_ rect: CGRect) {
-        centerOfView = CGPoint(x: self.bounds.width / 2, y: self.bounds.height / 2)
-        
-        setPolygonPath()
     }
 
 }
