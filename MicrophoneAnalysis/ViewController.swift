@@ -24,8 +24,8 @@ class ViewController: UIViewController {
     var tracker: AKFrequencyTracker!
     var silence: AKBooster!
     
-  
-
+    @IBOutlet weak var graphView: GraphView!
+    
     let noteFrequencies = [16.35, 17.32, 18.35, 19.45, 20.6, 21.83, 23.12, 24.5, 25.96, 27.5, 29.14, 30.87]
     let noteNamesWithSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
     let noteNamesWithFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
@@ -46,6 +46,8 @@ class ViewController: UIViewController {
         mic = AKMicrophone()
         tracker = AKFrequencyTracker(mic)
         silence = AKBooster(tracker, gain: 0)
+        
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -63,9 +65,12 @@ class ViewController: UIViewController {
 
     func updateUI() {
         
-        
-        
         if tracker.amplitude > 0.1 {
+            
+            if tracker.frequency >= minHZ && tracker.frequency <= maxHZ {
+                graphView.add(frequency: tracker.frequency)
+            }
+            
             frequencyLabel.text = String(format: "%0.1f", tracker.frequency)
 
             var frequency = Float(tracker.frequency)
@@ -89,7 +94,9 @@ class ViewController: UIViewController {
             let octave = Int(log2f(Float(tracker.frequency) / frequency))
             noteNameWithSharpsLabel.text = "\(noteNamesWithSharps[index])\(octave)"
             noteNameWithFlatsLabel.text = "\(noteNamesWithFlats[index])\(octave)"
+        
         }
+        
         amplitudeLabel.text = String(format: "%0.2f", tracker.amplitude)
     }
     

@@ -157,6 +157,7 @@
                         <outlet property="amplitudeLabel" destination="1mf-d7-blN" id="WYC-8w-D1U"/>
                         <outlet property="audioInputPlot" destination="EaM-zb-3c9" id="1jz-6A-QQ8"/>
                         <outlet property="frequencyLabel" destination="xph-d4-IE8" id="lIe-cB-sHp"/>
+                        <outlet property="graphView" destination="7QJ-82-b90" id="9oo-QU-xMX"/>
                         <outlet property="noteNameWithFlatsLabel" destination="Mcf-Kn-Hg2" id="QL0-Yp-qzt"/>
                         <outlet property="noteNameWithSharpsLabel" destination="3aS-E9-IjQ" id="dWR-nh-Tse"/>
                     </connections>

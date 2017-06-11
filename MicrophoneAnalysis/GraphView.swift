@@ -15,41 +15,42 @@ class GraphView: UIView {
     fileprivate var pointsArray = [CGPoint]()
     var centerOfView = CGPoint()
 
-    
-    let polygonPath = UIBezierPath()
-    
     func add(frequency: Double) {
         
-        let xPosition = centerOfView.x - CGFloat(pointsArray.count)
-        let yPosition = self.bounds.height * CGFloat( frequency / (maxHZ - minHZ) )
+        print(frequency)
+        
+        for i in 0..<pointsArray.count {
+            pointsArray[i].x -= self.bounds.width / 100.0
+        }
+        
+        let xPosition = centerOfView.x
+        let yPosition = self.bounds.height - ( self.bounds.height * CGFloat( frequency / (maxHZ - minHZ) ) )
         pointsArray.append( CGPoint(x: xPosition, y: yPosition) )
         
         setPolygonPath()
     }
     
     func setPolygonPath() {
-        
-        polygonPath.move(to: centerOfView)
-        
-        for point in pointsArray {
-            polygonPath.addLine(to: point)
+        let polygonPath = UIBezierPath()
+        if pointsArray.count > 0 {
+            polygonPath.move(to: pointsArray.first!)
+            
+            for point in pointsArray {
+                polygonPath.addLine(to: point)
+            }
         }
         
-        polygonPath.close()
-        
-        let greenColor = UIColor.green
-        greenColor.setFill()
         let orangeColor = UIColor.orange
         orangeColor.setStroke()
-        polygonPath.fill()
         polygonPath.lineWidth = 3.0
-        
         polygonPath.stroke()
+        
+        self.setNeedsDisplay()
     }
 
     override func draw(_ rect: CGRect) {
         centerOfView = CGPoint(x: self.bounds.width / 2, y: self.bounds.height / 2)
-       
+        
         setPolygonPath()
     }
 
