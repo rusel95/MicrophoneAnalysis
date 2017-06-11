@@ -9,6 +9,9 @@
 import AudioKit
 import UIKit
 
+let minHZ = 60.0
+let maxHZ = 1000.0
+
 class ViewController: UIViewController {
 
     @IBOutlet private var frequencyLabel: UILabel!
@@ -20,6 +23,8 @@ class ViewController: UIViewController {
     var mic: AKMicrophone!
     var tracker: AKFrequencyTracker!
     var silence: AKBooster!
+    
+  
 
     let noteFrequencies = [16.35, 17.32, 18.35, 19.45, 20.6, 21.83, 23.12, 24.5, 25.96, 27.5, 29.14, 30.87]
     let noteNamesWithSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
@@ -57,6 +62,9 @@ class ViewController: UIViewController {
     }
 
     func updateUI() {
+        
+        
+        
         if tracker.amplitude > 0.1 {
             frequencyLabel.text = String(format: "%0.1f", tracker.frequency)
 
@@ -84,4 +92,6 @@ class ViewController: UIViewController {
         }
         amplitudeLabel.text = String(format: "%0.2f", tracker.amplitude)
     }
+    
+    
 }
